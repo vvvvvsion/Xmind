@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作业二</title>
+    <style>
+        *{list-style: none;margin: 0;padding: 0;}
+        .wrap{text-align: right;width: 230px;}
+        #txt{resize: none;overflow: auto;text-align: left}
+        #post{width: 500px;margin: 0 auto;border: 1px solid #000;height: 500px;overflow: auto;}
+
+        li{border-bottom:2px dashed #ccc ;width: 100%;font:16px/22px "Microsoft Yahei";
+            ;opacity: 0;overflow: hidden}
+    </style>
+    <script>
+        window.onload=function(){
+      var oTxt=document.getElementById('txt');
+      var oBtn=document.getElementsByTagName('input')[0];
+      var oUl=document.getElementsByTagName('ul')[0];
+      oBtn.onclick=function () {
+         var t=oTxt.value;
+         var li=document.createElement('li');
+         var t1=document.createTextNode(t);
+         li.appendChild(t1);
+         var fir=oUl.firstElementChild||oUl.firstChild;
+          oUl.insertBefore(li,fir);//先放进去
+          var tp=li.offsetHeight;//取出高
+          li.style.height="0";//让li的高等于0;
+          console.log(tp);
+          height(li,tp);
+      };
+      function height(obj,tp) {
+        var m=0,suo=0;//缩放比例,初始等于0;tp是高,tp*suo:高随比例变大而慢慢变大
+        var timer= setInterval(function () {
+            suo=m/100;  //比例不断变大直到等于一
+            m=m+(200-m)/10;//m目标值等于200;m=200时透明度等于1
+            if(suo<=1){obj.style.height=tp*suo+"px";  }
+           else {obj.style.opacity=(m-100)/100;}//高撑开以后再出现还是同步出现??
+                if(m>=200){ clearInterval(timer); }
+          },70)      }
+        }
+    </script>
+</head>
+<body>
+<div class="wrap">
+<textarea  id="txt" cols="30" rows="10" ></textarea><br/>
+<input type="button" value="发帖">
+</div>
+<div id="post"><ul></ul></div>
+</body>
+</html>
